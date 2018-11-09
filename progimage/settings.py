@@ -39,6 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# Third party apps
+INSTALLED_APPS += [
+    'rest_framework',
+]
+
+# Prog-image apps
+INSTALLED_APPS += [
+    'library'
+]
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
