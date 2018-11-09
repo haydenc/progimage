@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path, include
+from rest_framework import routers
+
+from library.viewsets import StoredImageViewset
+
+router = routers.DefaultRouter()
+router.register('library/images', StoredImageViewset, base_name="stored-images")
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]
