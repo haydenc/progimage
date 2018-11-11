@@ -11,16 +11,17 @@ class ImageTransformationManager:
         """Constructed with a PIL(pillow) Image instance"""
         self.image = image
         # Keep hold of the original to retrieve format
-        self._original_image = image
+        self._original_image_format = image.format
 
     def _get_export_format(self):
-        return self.export_format or self._original_image.format
+        return self.export_format or self._original_image_format
 
     def save_to_bytestream(self, output):
         """ Saves the image to any writable bytestream """
         self.image.save(output, format=self._get_export_format())
 
     def get_mimetype(self):
+        # FIXME: Horrible
         mimetype, _ = mimetypes.guess_type("{}.{}".format("image", self._get_export_format()))
         return mimetype
 
