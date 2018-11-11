@@ -1,5 +1,5 @@
 import mimetypes
-from PIL.Image import EXTENT
+from PIL.Image import NEAREST
 
 
 class ImageTransformationManager:
@@ -40,5 +40,5 @@ class ImageTransformationManager:
     def transform_scale(self, multiplier=None):
         # Pil transform expects a new size rather than a multiplier, we'll enforce ratio retention here
         new_size = (dim * multiplier for dim in self.image.size)
-        # TODO: Untested - not sure that EXTENT is the right method, might bork with multipliers > 1
-        self.image = self.image.transform(new_size, EXTENT)
+        # TODO: Untested - not sure that NEAREST is the right method, might bork with multipliers > 1
+        self.image = self.image.resize(new_size, NEAREST)
