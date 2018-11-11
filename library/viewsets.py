@@ -1,3 +1,5 @@
+import json
+
 from PIL import Image
 from django.http import HttpResponse
 from rest_framework.decorators import action
@@ -30,8 +32,12 @@ class StoredImageViewset(ModelViewSet):
         original_image = Image.open(image_record.original)
         # Initialise transformation manager
         image_manager = ImageTransformationManager(original_image)
-        # Export to format specified in URL params or default to original format
-        export_format = request.GET.get("image_format", original_image.format)
+
+        for transform in json.loads(request.data["transforms"]):
+            transform_method = getattr(image_manager, "transform_{}".format(transform["type"]))
+            transform_args = transform["args"]
+            transform_method(*transform_args)
+
         # Create empty response object
         response = HttpResponse(content_type=image_manager.get_mimetype())
         # Image manager will write directly to responses "_container" bytestream
