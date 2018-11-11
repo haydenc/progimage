@@ -8,4 +8,4 @@ class StoredImage(UpdateInfoBaseModel):
     original = models.ImageField(upload_to="stored_images")
 
     def __str__(self):
-        return "Image uploaded by {} at {}".format(self.owner, self.createtime)
+        return "Image uploaded by {} at {}".format(self.owner.username, self.createtime)
